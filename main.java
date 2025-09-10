@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Karyawan> karyawanList = new ArrayList<>();
-        ArrayList<Departemen> departemenList = new ArrayList<>();
-        KaryawanService service = new KaryawanService();
-        int jumlahKaryawan, jumlahDepartemen, pilihDept, pilih;
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final ArrayList<Karyawan> karyawanList = new ArrayList<>();
+    private static final ArrayList<Departemen> departemenList = new ArrayList<>();
+    private static final KaryawanService service = new KaryawanService();
 
+    public static void main(String[] args) {
+        int pilih;
         do {
             System.out.println("\nSelamat Datang di Aplikasi Manajemen Karyawan!");
-            System.out.println("\n1. Tambah Departemen");
+            System.out.println("1. Tambah Departemen");
             System.out.println("2. Tambah Karyawan");
             System.out.println("3. Lihat Data");
             System.out.println("4. Cetak Slip Gaji");
@@ -24,79 +24,32 @@ public class main {
             scanner.nextLine();
 
             switch (pilih) {
-                case 1 -> {
-                    System.out.print("Masukan jumlah departemen: ");
-                    jumlahDepartemen = scanner.nextInt();
-                    scanner.nextLine();
-
-                    for (int i = 0; i < jumlahDepartemen; i++) {
-                        Departemen departemen = new Departemen();
-                        System.out.println("\nDepartemen ke - " + (i + 1));
-                        System.out.print("Nama Departemen: ");
-                        departemen.setName(scanner.nextLine());
-                        System.out.print("Deskripsi: ");
-                        departemen.setDesc(scanner.nextLine());
-                        departemenList.add(departemen);
-                    }
-                }
-                case 2 -> {
-                    System.out.print("Masukan jumlah karyawan: ");
-                    jumlahKaryawan = scanner.nextInt();
-                    scanner.nextLine();
-
-                    for (int i = 0; i < jumlahKaryawan; i++) {
-                        Karyawan karyawan = new Karyawan();
-                        System.out.println("\nKaryawan ke - " + (i + 1));
-                        System.out.print("Nama Karyawan: ");
-                        karyawan.setName(scanner.nextLine());
-                        System.out.print("Gaji: ");
-                        karyawan.setGaji(scanner.nextInt());
-                        scanner.nextLine();
-
-                        // Pilih Departemen
-                        System.out.println("Pilih Departemen: ");
-                        for (int j = 0; j < departemenList.size(); j++) {
-                            System.out.println((j + 1) + ". " + departemenList.get(j).getName());
-                        }
-                        System.out.print("Masukan nomor departemen: ");
-                        pilihDept = scanner.nextInt() - 1;
-                        scanner.nextLine();
-
-                        if (pilihDept >= 0 && pilihDept < departemenList.size()) {
-                            karyawan.setDepartemen(departemenList.get(pilihDept));
-                        }
-                        karyawanList.add(karyawan);
-                    }
-                }
-                case 3 -> {
-                    System.out.println("========== Data Departemen ==========");
-                    for (Departemen departemen : departemenList) {
-                        departemen.display();
-                    }
-                    System.out.println("========== Data Karyawan ==========");
-                    for (Karyawan karyawan : karyawanList) {
-                        karyawan.display();
-                    }
-                }
-                case 4 -> {
-                    System.out.println("Pilih Karyawan untuk Cetak Slip Gaji: ");
-                    for (int i = 0; i < karyawanList.size(); i++) {
-                        System.out.println((i+1) + ". " + karyawanList.get(i).getName());
-                    }
-                    int pilihan = scanner.nextInt() - 1;
-                    if (pilihan >= 0 && pilihan < karyawanList.size()) {
-                        service.cetakSlipGaji(karyawanList.get(pilihan));
-                    }
-                }
-                case 5 -> {
-                    System.out.println("Keluar dari program...");
-                }
-                default -> {
-                    System.out.println("Pilihan tidak valid!");
-                }
+                case 1 -> tambahDepartemen();
+                case 2 -> tambahKaryawan();
+                case 3 -> tampilkanData();
+                case 4 -> cetakSlipGaji();
+                case 5 -> System.out.println("Keluar dari program...");
+                default -> System.out.println("Pilihan tidak valid!");
             }
         } while (pilih != 5);
 
         scanner.close();
+    }
+
+    // Wrapper method untuk memanggil service
+    private static void tambahDepartemen() {
+        service.tambahDepartemen(scanner, departemenList);
+    }
+
+    private static void tambahKaryawan() {
+        service.tambahKaryawan(scanner, karyawanList, departemenList);
+    }
+
+    private static void tampilkanData() {
+        service.tampilkanData(karyawanList, departemenList);
+    }
+
+    private static void cetakSlipGaji() {
+        service.cetakSlipGajiMenu(scanner, karyawanList);
     }
 }

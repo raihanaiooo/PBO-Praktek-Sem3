@@ -34,4 +34,14 @@ public class Karyawan {
         System.out.println("Gaji: " + gaji);
         System.out.println("-------------------");
     }
+
+    // Input data
+    
+    public void inputData(java.util.Scanner scanner) {
+        System.out.print("Nama Karyawan: ");
+        this.name = scanner.nextLine();
+        System.out.print("Gaji: ");
+        this.gaji = scanner.nextInt();
+        scanner.nextLine();
+    }
 }

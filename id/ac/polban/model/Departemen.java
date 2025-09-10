@@ -27,4 +27,12 @@ public class Departemen {
         System.out.println("Deskripsi: " + desc);
         System.out.println("-------------------");
     }
+
+    // Input data
+    public void inputData(java.util.Scanner scanner) {
+        System.out.print("Nama Departemen: ");
+        this.name = scanner.nextLine();
+        System.out.print("Deskripsi: ");
+        this.desc = scanner.nextLine();
+    }
 }
