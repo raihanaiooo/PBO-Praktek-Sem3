@@ -42,7 +42,8 @@ public class Circle{
 
     // Return a self-descriptive string of this instance in the form of Circle[radius=?,color=?]
     public String toString() {
-        return "\nCircle[radius=" + radius + " color=" + color + "]";
+        return "Circle[radius=" + radius + " color=" + color + "]";
     }  
+
 
 }
