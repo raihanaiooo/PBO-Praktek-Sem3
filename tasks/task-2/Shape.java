@@ -23,7 +23,9 @@ public class Shape{
         return filled;
     }
     
-    public void setFilled(boolean filled){}
+    public void setFilled(boolean filled){
+        this.filled = filled;
+    }
 
     public String toString(){
         return "A shape with color of "+color+" and "+(filled?"filled":"not filled");
