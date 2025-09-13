@@ -21,13 +21,13 @@ public abstract class Person {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    // Display dasar
+    // Display dasar (dapat di-override oleh subclass)
     public void display() {
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
     }
 
-    // Input data dasar
+    // Input data dasar (dapat di-override)
     public void inputData(java.util.Scanner scanner) {
         System.out.print("Nama: ");
         this.name = scanner.nextLine();

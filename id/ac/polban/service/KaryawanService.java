@@ -2,6 +2,7 @@ package id.ac.polban.service;
 
 import id.ac.polban.model.Departemen;
 import id.ac.polban.model.Karyawan;
+import id.ac.polban.model.Manager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class KaryawanService {
     }
 
     // Case 2: Tambah Karyawan
-    public void tambahKaryawan(Scanner scanner, ArrayList<Karyawan> karyawanList, ArrayList<Departemen> departemenList) {
+     public void tambahKaryawan(Scanner scanner, ArrayList<Karyawan> karyawanList, ArrayList<Departemen> departemenList) {
         if (departemenList.isEmpty()) {
             System.out.println("⚠ Belum ada departemen. Tambahkan departemen terlebih dahulu!");
             return;
@@ -33,8 +34,17 @@ public class KaryawanService {
         scanner.nextLine();
 
         for (int i = 0; i < jumlahKaryawan; i++) {
-            Karyawan karyawan = new Karyawan();
             System.out.println("\nKaryawan ke - " + (i + 1));
+            System.out.print("Apakah karyawan ini seorang manager? (y/n): ");
+            String tipe = scanner.nextLine().trim();
+
+            Karyawan karyawan;
+            if (tipe.equalsIgnoreCase("y")) {
+                karyawan = new Manager(); // Manager is-a Karyawan
+            } else {
+                karyawan = new Karyawan();
+            }
+
             karyawan.inputData(scanner);
 
             // Pilih Departemen
@@ -80,6 +90,7 @@ public class KaryawanService {
             System.out.println((i + 1) + ". " + karyawanList.get(i).getName());
         }
         int pilihan = scanner.nextInt() - 1;
+        scanner.nextLine();
         if (pilihan >= 0 && pilihan < karyawanList.size()) {
             cetakSlipGaji(karyawanList.get(pilihan));
         } else {
@@ -91,7 +102,7 @@ public class KaryawanService {
     public void cetakSlipGaji(Karyawan karyawan) {
         System.out.println("Slip Gaji untuk " + karyawan.getName());
         System.out.println("Departemen: " + (karyawan.getDepartemen() != null ? karyawan.getDepartemen().getName() : "-"));
-        System.out.println("Gaji: " + karyawan.getGaji());
+        System.out.println("Gaji: " + karyawan.getGaji()); // jika Manager, getGaji() menambahkan tunjangan
         System.out.println("=======================");
     }
 }

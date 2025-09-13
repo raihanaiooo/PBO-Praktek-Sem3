@@ -15,7 +15,7 @@ public class Manager extends Karyawan {
     public int getTunjangan() { return tunjangan; }
     public void setTunjangan(int tunjangan) { this.tunjangan = tunjangan; }
 
-    // Display
+    // Override display
     @Override
     public void display() {
         super.display();
@@ -23,16 +23,16 @@ public class Manager extends Karyawan {
         System.out.println("-------------------");
     }
 
-    // Input data 
+    // Override inputData
     @Override
     public void inputData(java.util.Scanner scanner) {
-        super.inputData(scanner);
+        super.inputData(scanner); // input nama & gaji dari Karyawan
         System.out.print("Tunjangan: ");
         this.tunjangan = scanner.nextInt();
         scanner.nextLine();
     }
 
-    // Override getGaji untuk menambahkan tunjangan — contoh polymorphism saat digunakan
+    // Override getGaji
     @Override
     public int getGaji() {
         return super.getGaji() + tunjangan;
