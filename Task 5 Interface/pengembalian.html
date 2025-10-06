@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>DFD Level 2 - Pengembalian Barang</title>
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			#cy {
+				width: 100vw;
+				height: 100vh;
+				display: block;
+				border: 2px solid #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="cy"></div>
+		<script>
+			const cy = cytoscape({
+				container: document.getElementById("cy"),
+				elements: [
+					// External Entity
+					{
+						data: { id: "dosen", label: "Dosen/Mahasiswa" },
+						position: { x: 50, y: 200 },
+						classes: "entity",
+					},
+
+					// Sub-processes
+					{
+						data: { id: "p31", label: "3.1 Input Data Pengembalian" },
+						position: { x: 300, y: 100 },
+						classes: "process",
+					},
+					{
+						data: { id: "p32", label: "3.2 Catat Waktu Pengembalian" },
+						position: { x: 300, y: 250 },
+						classes: "process",
+					},
+					{
+						data: { id: "p33", label: "3.3 Update Status Barang" },
+						position: { x: 300, y: 400 },
+						classes: "process",
+					},
+					{
+						data: { id: "p34", label: "3.4 Catat Kondisi Barang" },
+						position: { x: 300, y: 550 },
+						classes: "process",
+					},
+
+					// Data Stores
+					{
+						data: { id: "ds1", label: "Data Barang" },
+						position: { x: 600, y: 400 },
+						classes: "datastore",
+					},
+					{
+						data: { id: "ds2", label: "Data Pengembalian" },
+						position: { x: 600, y: 200 },
+						classes: "datastore",
+					},
+
+					// Edges
+					{
+						data: { source: "dosen", target: "p31", label: "Serahkan Barang" },
+					},
+					{
+						data: { source: "p31", target: "p32", label: "Data Pengembalian" },
+					},
+
+					{
+						data: {
+							source: "p32",
+							target: "ds2",
+							label: "Simpan Waktu & Data Pengembalian",
+						},
+					},
+					{
+						data: { source: "p32", target: "p33", label: "Info Pengembalian" },
+					},
+
+					{
+						data: {
+							source: "p33",
+							target: "ds1",
+							label: "Update Status → Tersedia",
+						},
+					},
+					{
+						data: {
+							source: "p33",
+							target: "p34",
+							label: "Barang Sudah Tersedia",
+						},
+					},
+
+					{
+						data: {
+							source: "p34",
+							target: "ds1",
+							label: "Catat Kondisi Barang",
+						},
+					},
+				],
+				style: [
+					{
+						selector: "node.process",
+						style: {
+							shape: "ellipse",
+							"background-color": "#4CAF50",
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#fff",
+							"font-size": "12px",
+							width: "200",
+							height: "60",
+						},
+					},
+					{
+						selector: "node.entity",
+						style: {
+							shape: "rectangle",
+							"background-color": "#2196F3",
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#fff",
+							"font-size": "12px",
+							width: "150",
+							height: "50",
+						},
+					},
+					{
+						selector: "node.datastore",
+						style: {
+							shape: "round-rectangle",
+							"background-color": "#FFC107",
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#000",
+							"font-size": "12px",
+							width: "180",
+							height: "50",
+							"border-width": 2,
+							"border-color": "#333",
+						},
+					},
+					{
+						selector: "edge",
+						style: {
+							"curve-style": "bezier",
+							"target-arrow-shape": "triangle",
+							label: "data(label)",
+							"font-size": "10px",
+							"text-background-color": "#fff",
+							"text-background-opacity": 1,
+							width: 2,
+							"line-color": "#555",
+							"target-arrow-color": "#555",
+						},
+					},
+				],
+				layout: { name: "preset" }, // posisi manual
+			});
+		</script>
+	</body>
+</html>

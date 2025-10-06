@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>DFD 1.0 Manajemen Barang</title>
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+		<style>
+			#cy {
+				width: 100%;
+				height: 100vh;
+				display: block;
+				background: #f8f9fa;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="cy"></div>
+		<script>
+			var cy = cytoscape({
+				container: document.getElementById("cy"),
+				elements: [
+					// External Entity
+					{
+						data: { id: "petugas", label: "Petugas/Admin" },
+						position: { x: 50, y: 250 },
+					},
+
+					// Sub-Proses
+					{
+						data: { id: "tambah", label: "1.1 Tambah Barang" },
+						position: { x: 300, y: 100 },
+					},
+					{
+						data: { id: "update", label: "1.2 Update Barang" },
+						position: { x: 300, y: 200 },
+					},
+					{
+						data: { id: "hapus", label: "1.3 Hapus Barang" },
+						position: { x: 300, y: 300 },
+					},
+					{
+						data: { id: "lihat", label: "1.4 Lihat Data Barang" },
+						position: { x: 300, y: 400 },
+					},
+
+					// Data Store
+					{
+						data: { id: "dataBarang", label: "Data Barang" },
+						position: { x: 600, y: 250 },
+					},
+
+					// Edges
+					{
+						data: {
+							source: "petugas",
+							target: "tambah",
+							label: "input barang baru",
+						},
+					},
+					{
+						data: {
+							source: "tambah",
+							target: "dataBarang",
+							label: "simpan barang",
+						},
+					},
+
+					{
+						data: { source: "petugas", target: "update", label: "edit barang" },
+					},
+					{
+						data: {
+							source: "update",
+							target: "dataBarang",
+							label: "update data",
+						},
+					},
+
+					{
+						data: { source: "petugas", target: "hapus", label: "hapus barang" },
+					},
+					{
+						data: {
+							source: "hapus",
+							target: "dataBarang",
+							label: "hapus data",
+						},
+					},
+
+					{
+						data: { source: "petugas", target: "lihat", label: "request data" },
+					},
+					{
+						data: {
+							source: "dataBarang",
+							target: "lihat",
+							label: "data barang",
+						},
+					},
+					{
+						data: {
+							source: "lihat",
+							target: "petugas",
+							label: "tampilkan barang",
+						},
+					},
+				],
+				style: [
+					{
+						selector: "node",
+						style: {
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#000",
+							"text-outline-width": 2,
+							"text-outline-color": "#fff",
+							"background-color": "#87CEEB",
+							shape: "round-rectangle",
+							width: "140px",
+							height: "50px",
+							"font-size": "12px",
+						},
+					},
+					{
+						selector: "#dataBarang",
+						style: {
+							"background-color": "#FFD700",
+							shape: "rectangle",
+						},
+					},
+					{
+						selector: "#petugas",
+						style: {
+							"background-color": "#90EE90",
+							shape: "ellipse",
+						},
+					},
+					{
+						selector: "edge",
+						style: {
+							width: 2,
+							"line-color": "#555",
+							"target-arrow-color": "#555",
+							"target-arrow-shape": "triangle",
+							"curve-style": "bezier",
+							label: "data(label)",
+							"font-size": "10px",
+							"text-background-color": "#fff",
+							"text-background-opacity": 1,
+							"text-rotation": "autorotate",
+						},
+					},
+				],
+				layout: { name: "preset" },
+			});
+		</script>
+	</body>
+</html>

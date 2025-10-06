@@ -20,3 +20,5 @@ abstract class Goods{
         System.out.println("Price: "+price);
     }
 }
+
+

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>DFD Level 2 - Peminjaman Barang</title>
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+			#cy {
+				width: 100vw;
+				height: 100vh;
+				display: block;
+				border: 2px solid #333;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="cy"></div>
+		<script>
+			const cy = cytoscape({
+				container: document.getElementById("cy"),
+				elements: [
+					// External Entity
+					{
+						data: { id: "dosen", label: "Dosen/Mahasiswa" },
+						position: { x: 50, y: 200 },
+						classes: "entity",
+					},
+
+					// Sub-processes
+					{
+						data: { id: "p21", label: "2.1 Input Data Peminjam" },
+						position: { x: 300, y: 100 },
+						classes: "process",
+					},
+					{
+						data: { id: "p22", label: "2.2 Validasi Ketersediaan Barang" },
+						position: { x: 300, y: 250 },
+						classes: "process",
+					},
+					{
+						data: { id: "p23", label: "2.3 Catat Transaksi Peminjaman" },
+						position: { x: 300, y: 400 },
+						classes: "process",
+					},
+					{
+						data: { id: "p24", label: "2.4 Update Status Barang" },
+						position: { x: 300, y: 550 },
+						classes: "process",
+					},
+
+					// Data Stores
+					{
+						data: { id: "ds1", label: "Data Barang" },
+						position: { x: 600, y: 250 },
+						classes: "datastore",
+					},
+					{
+						data: { id: "ds2", label: "Data Peminjaman" },
+						position: { x: 600, y: 400 },
+						classes: "datastore",
+					},
+
+					// Edges
+					{
+						data: {
+							source: "dosen",
+							target: "p21",
+							label: "Isi Form Peminjaman",
+						},
+					},
+					{ data: { source: "p21", target: "p22", label: "Data Peminjam" } },
+
+					{
+						data: { source: "p22", target: "ds1", label: "Cek Status Barang" },
+					},
+					{ data: { source: "ds1", target: "p22", label: "Status Barang" } },
+					{ data: { source: "p22", target: "p23", label: "Validasi OK" } },
+
+					{ data: { source: "p23", target: "ds2", label: "Simpan Transaksi" } },
+					{ data: { source: "p23", target: "p24", label: "Data Transaksi" } },
+
+					{
+						data: {
+							source: "p24",
+							target: "ds1",
+							label: "Update Status → Dipinjam",
+						},
+					},
+				],
+				style: [
+					{
+						selector: "node.process",
+						style: {
+							shape: "ellipse",
+							"background-color": "#4CAF50",
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#fff",
+							"font-size": "12px",
+							width: "180",
+							height: "60",
+						},
+					},
+					{
+						selector: "node.entity",
+						style: {
+							shape: "rectangle",
+							"background-color": "#2196F3",
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#fff",
+							"font-size": "12px",
+							width: "140",
+							height: "50",
+						},
+					},
+					{
+						selector: "node.datastore",
+						style: {
+							shape: "round-rectangle",
+							"background-color": "#FFC107",
+							label: "data(label)",
+							"text-valign": "center",
+							color: "#000",
+							"font-size": "12px",
+							width: "160",
+							height: "50",
+							"border-width": 2,
+							"border-color": "#333",
+						},
+					},
+					{
+						selector: "edge",
+						style: {
+							"curve-style": "bezier",
+							"target-arrow-shape": "triangle",
+							label: "data(label)",
+							"font-size": "10px",
+							"text-background-color": "#fff",
+							"text-background-opacity": 1,
+							width: 2,
+							"line-color": "#555",
+							"target-arrow-color": "#555",
+						},
+					},
+				],
+				layout: { name: "preset" }, // manual posisi
+			});
+		</script>
+	</body>
+</html>

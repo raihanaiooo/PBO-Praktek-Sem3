@@ -22,3 +22,5 @@ class Toy extends Goods implements Taxable{
         System.out.println("Tax: "+calculateTax());
     }
 }
+
+

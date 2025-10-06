@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DFD Sub-Proses 1.4: Laporan</title>
+		<style>
+			body {
+				font-family: "Arial", sans-serif;
+				background-color: #f7f7f7;
+				padding: 20px;
+			}
+			.dfd-container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				max-width: 700px;
+				margin: auto;
+				border: 1px solid #ddd;
+				padding: 20px;
+				background-color: #fff;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+
+			/* Styling Komponen DFD */
+			.component {
+				margin: 8px 0;
+				padding: 8px 15px;
+				text-align: center;
+				border-radius: 5px;
+				font-weight: bold;
+				min-width: 180px;
+			}
+
+			/* Entitas Eksternal (Admin/Manajemen) */
+			.entity {
+				border: 2px solid #007bff;
+				background-color: #eaf4ff;
+				color: #007bff;
+			}
+
+			/* Proses (Oval/Lingkaran) */
+			.process {
+				border: 2px solid #28a745;
+				background-color: #e6ffed;
+				color: #28a745;
+				min-width: 250px;
+			}
+
+			/* Data Store (Garis Ganda) */
+			.datastore {
+				border: 2px solid #ffc107;
+				border-left: none;
+				border-right: none;
+				background-color: #fffbe6;
+				color: #333;
+				min-width: 150px;
+				text-align: left;
+				padding: 4px 10px;
+			}
+
+			/* Aliran Data */
+			.flow {
+				font-weight: normal;
+				font-size: 0.85em;
+				color: #666;
+				padding: 3px;
+				text-align: center;
+			}
+
+			/* Struktur Aliran */
+			.connector {
+				font-size: 1.2em;
+				color: #888;
+				margin: -5px 0;
+			}
+
+			.data-access-group {
+				display: flex;
+				justify-content: space-around;
+				width: 90%;
+				margin: 10px 0;
+			}
+			.data-access-line {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			.data-access-line .flow {
+				font-size: 0.8em;
+				margin-bottom: 2px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dfd-container">
+			<h2>DFD Level 2: Sub-Proses Laporan (1.4)</h2>
+
+			<div class="component entity">Admin/Manajemen</div>
+
+			<div class="flow">
+				🡣 Permintaan_Data_Laporan [ Riwayat_Pinjam | Barang_Rusak ] +
+				(Periode_Waktu)
+			</div>
+			<div class="connector">|</div>
+
+			<div class="component process">1.4.1 Input_Permintaan_Laporan</div>
+
+			<div class="flow" style="margin-top: -5px">
+				Konfirmasi_Input 🡥 (ke Admin/Manajemen)
+			</div>
+
+			<div class="flow">🡣 Kriteria_Laporan</div>
+			<div class="connector">|</div>
+
+			<div class="component process">1.4.2 Akses_dan_Filter_Data</div>
+
+			<div class="data-access-group">
+				<div class="data-access-line">
+					<div class="flow">Data_Riwayat 🡨</div>
+					<div class="datastore">2 Data_Peminjaman</div>
+				</div>
+				<div class="data-access-line">
+					<div class="flow">Data_Pengembalian 🡨</div>
+					<div class="datastore">3 Data_Pengembalian</div>
+				</div>
+				<div class="data-access-line">
+					<div class="flow">Data_Kondisi 🡨</div>
+					<div class="datastore">1 Data_Barang</div>
+				</div>
+			</div>
+
+			<div class="flow">🡣 Data_Siap_Cetak, Log_Akses_Data</div>
+			<div class="connector">|</div>
+
+			<div class="component process">1.4.3 Generate_dan_Cetak_Laporan</div>
+
+			<div class="flow">
+				🡥 Hasil_Laporan: @ID_Laporan + Tgl_Cetak + 1{Detail_Data}N
+			</div>
+			<div class="connector">|</div>
+
+			<div class="component entity">Admin/Manajemen</div>
+		</div>
+	</body>
+</html>

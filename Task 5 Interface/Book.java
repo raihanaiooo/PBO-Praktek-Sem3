@@ -22,3 +22,5 @@ class Book extends Goods implements Taxable{
         System.out.println("Tax: "+calculateTax());
     }
 }
+
+

@@ -14,3 +14,5 @@ public class ManagerTest{
         for(i = 0; i < 3; i++) staff[i].print();
     }
 }
+
+

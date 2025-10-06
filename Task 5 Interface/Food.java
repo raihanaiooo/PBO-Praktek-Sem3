@@ -16,3 +16,6 @@ class Food extends Goods{
         System.out.println("Calories: "+calories);
     }
 }
+
+
+
